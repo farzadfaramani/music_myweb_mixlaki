@@ -1,0 +1,42 @@
+{% extends './base/base.html' %}
+
+{% block extra_meta %}
+<meta name="description" content="{{post.text[:150]}}">
+{% endblock %}
+
+
+{% block text %}
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center mt-4">
+            <div class="col-9">
+                <div class="card text-center">
+                    <div class="card-header">{{ post.titel }}</div>
+                    <div class="card-body">
+                        <div>
+                            {{post.singer}}
+                        </div><br><br>
+                        <div>
+                            <img src="{{url_for('static' , filename = post.pic)}}" alt="دانلود آهنگ {{post.titel}}"
+                                class="img-fluid img-thumbnail rounded w-75">
+                        </div>
+                        <div class="mt-5">
+                            {{post.text}}
+                        </div>
+                    </div>
+                    <div class="card-footer text-body-secondary">
+                        <h5 class="card-title mt-2">پخش آنلاین موزیک و دانلود موزیک</h5>
+                        <p class="card-text mt-4"><audio class="form-control" controls
+                                src="{{url_for('static' , filename = post.music)}}">متاسفیم مروگر شما از پخش آنلاین
+                                پشتیبانی نمیکنه</audio></p>
+                        <a href="{{url_for('dowanload', filename = post.music )}}"
+                            class="btn btn-outline-secondary w-50 mb-2">دانلود موزیک با کیفیت 320</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</section>
+{% endblock %}

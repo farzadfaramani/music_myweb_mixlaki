@@ -1,0 +1,43 @@
+{% extends './base/base.html' %}
+
+{% block text %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div class="card text-center">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category , message in messages %}
+                <div class=" alert alert-{{category}}" role="alert">
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <div class="card-header text-center">پنل مدیریت و ورود</div>
+                <div class="card-body m-3">
+                    <form action="{{url_for('login')}}" method="post">
+                        {{form.csrf_token}}
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                                name="email">
+                            <label for="floatingInput">نام کاربری</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                name="password">
+                            <label for="floatingPassword">رمز عبور</label>
+                        </div>
+                        <div class="form-control mt-3">
+                            {{form.rec}}
+                        </div>
+                        <button class="btn btn-success w-100 mt-3">ورود</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

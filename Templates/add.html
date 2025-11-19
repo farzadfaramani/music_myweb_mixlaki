@@ -1,0 +1,95 @@
+{% extends './base/base.html' %}
+
+
+{% block text %}
+<div class="container mt-1">
+    <div class="row g-2">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">وب سایت میکس لکی</div>
+                <div class="card-body">
+                    <img src="/static/images/482965400_1353323505852072_9075264199858071570_n.jpeg"
+                        class="card-img-top rounded-circle" alt={elonMusk} style="width: 50%;" />
+                    <hr>
+                    <h6>وضعیت پیج اینستاگرام</h6>
+                    <div class="row mt-3 align-items-center mt-4">
+
+                        <div class="col-4">
+                            <h6>وضعیت</h6> <img src="/static/images/verified.png" class="card-img-top rounded-circle"
+                                alt={elonMusk} style="width: 23%;" />
+                        </div>
+                        <div class="col-4">
+                            <h6>فالوینگ</h6>11k
+                        </div>
+                        <div class="col-4">
+                            <h6>پست</h6>75
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>راه های ارتباط با ما</h6>
+                    <div class="row mt-3">
+                        <div class="col-4"><a href="https://www.instagram.com/mix_laki?igsh=M2l1cDRzcG1icGZw"><img
+                                    src="/static/images/icons8-instagram-logo-94.png"
+                                    class="card-img-top rounded-circle" alt={elonMusk} style="width: 50%;" /></a></div>
+                        <div class="col-4"><a href="https://t.me/kor_bawa"> <img
+                                    src="/static/images/icons8-telegram-logo-94.png" class="card-img-top rounded-circle"
+                                    alt={elonMusk} style="width: 50%;" /></a></div>
+                        <div class="col-4"><a href="#"> <img src="/static/images/icons8-website-94.png"
+                                    class="card-img-top rounded-circle" alt={elonMusk} style="width: 50%;" /></a></div>
+                    </div>
+                    {% if current_user.email %}
+                    <hr>
+                    <a href="{{url_for('add_post')}}" class="btn btn-primary w-100">افزودن پست جدید</a>
+                    <a href="{{url_for('all_post')}}" class="btn btn-warning mt-2 w-100">مدیریت پست ها</a>
+                    <form action="{{url_for('logout')}}" method="post" class="mt-2">
+                        <button class="btn btn-danger w-100">خروج</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category , message in messages %}
+                <div class=" alert alert-{{category}}" role="alert">
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <div class="card-header">افزودن پست جدید در وب سایت</div>
+                <div class="card-body">
+                    <form action="{{url_for('add_post')}}" method="post" enctype="multipart/form-data">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="عنوان مطلب"
+                                name="titel">
+                            <label for="floatingInput">عنوان پست</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="floatingPassword" placeholder="text"
+                                name="singer">
+                            <label for="floatingPassword">خواننده</label>
+                        </div>
+                        <div class="form-floating mt-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                name="text"></textarea>
+                            <label for="floatingTextarea">توضیحات و ادامه مطلب</label>
+                        </div>
+                        <div class="my-3 form-control ">
+                            <label for="formFile" class="form-label">آپلود عکس پست</label>
+                            <input class="form-control" type="file" id="formFile" name="pic">
+                        </div>
+                        <div class="my-3 form-control ">
+                            <label for="formFile" class="form-label">آپلود موزیک</label>
+                            <input class="form-control" type="file" id="formFile" name="music">
+                        </div>
+                        <button class="btn btn-success w-100">پست</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

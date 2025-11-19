@@ -1,0 +1,107 @@
+{% extends './base/base.html' %}
+
+
+{% block text %}
+<div class="container mt-1">
+    <div class="row g-2">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">وب سایت میکس لکی</div>
+                <div class="card-body">
+                    <img src="/static/images/482965400_1353323505852072_9075264199858071570_n.jpeg"
+                        class="card-img-top rounded-circle" alt={elonMusk} style="width: 50%;" />
+                    <hr>
+                    <h6>وضعیت پیج اینستاگرام</h6>
+                    <div class="row mt-3 align-items-center mt-4">
+
+                        <div class="col-4">
+                            <h6>وضعیت</h6> <img src="/static/images/verified.png" class="card-img-top rounded-circle"
+                                alt={elonMusk} style="width: 23%;" />
+                        </div>
+                        <div class="col-4">
+                            <h6>فالوینگ</h6>11k
+                        </div>
+                        <div class="col-4">
+                            <h6>پست</h6>75
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>راه های ارتباط با ما</h6>
+                    <div class="row mt-3">
+                        <div class="col-4"><a href="https://www.instagram.com/mix_laki?igsh=M2l1cDRzcG1icGZw"><img
+                                    src="/static/images/icons8-instagram-logo-94.png"
+                                    class="card-img-top rounded-circle" alt={elonMusk} style="width: 50%;" /></a></div>
+                        <div class="col-4"><a href="https://t.me/kor_bawa"> <img
+                                    src="/static/images/icons8-telegram-logo-94.png" class="card-img-top rounded-circle"
+                                    alt={elonMusk} style="width: 50%;" /></a></div>
+                        <div class="col-4"><a href="#"> <img src="/static/images/icons8-website-94.png"
+                                    class="card-img-top rounded-circle" alt={elonMusk} style="width: 50%;" /></a></div>
+                    </div>
+                    {% if current_user.email %}
+                    <hr>
+                    <a href="{{url_for('add_post')}}" class="btn btn-primary w-100">افزودن پست جدید</a>
+                    <a href="{{url_for('all_post')}}" class="btn btn-warning mt-2 w-100">مدیریت پست ها</a>
+                    <form action="{{url_for('logout')}}" method="post" class="mt-2">
+                        <button class="btn btn-danger w-100">خروج</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category , message in messages %}
+                <div class=" alert alert-{{category}}" role="alert">
+                    {{message}}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                <div class="card-header">مدیریت تمامی پست ها</div>
+                <div class="card-body text-center">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ردیف</th>
+                                <th scope="col">عنوان</th>
+                                <th scope="col">خواننده</th>
+                                <th scope="col">موزیک</th>
+                                <th scope="col">تغییرات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in posts %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{post.titel}}</td>
+                                <td>{{post.singer}}</td>
+                                <td>{{post.music}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{url_for('edit')}}?id={{post.id}}" class="btn btn-warning btn-sm">ویرایش</a>
+                                        {% if not post.new %}
+                                        <form action="{{url_for('new')}}?id={{post.id}}" method="post">
+                                            <button class="btn btn-success btn-sm mx-1">جدید</button>
+                                        </form>
+                                        {% else %}
+                                        <form action="{{url_for('del_new')}}?id={{post.id}}" method="post">
+                                            <button class="btn btn-info btn-sm mx-1">حذف از جدید ها</button>
+                                        </form>
+                                        {% endif %}
+                                        <form action="{{url_for('delete')}}?id={{post.id}}" method="post">
+                                            <button class="btn btn-danger btn-sm">حذف</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
